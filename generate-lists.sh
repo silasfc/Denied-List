@@ -41,12 +41,13 @@ cat domains.txt | tee hosts.txt | tee dnsmasq.conf | tee dnsmasq-ipv6.conf > /de
 echo 'Gerando lista hosts.txt ...'
 sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo 'Gerando lista dnsmasq.conf e dnsmasq-ipv6.conf ...'
+echo 'Gerando lista dnsmasq (ipv4 e ipv6) ...'
 sed -i 's/^/address=\//g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
 sed -i 's/$/\/0.0.0.0/g' $CURRENT_DIR/dnsmasq.conf
 sed -i 's/$/\/::1/g' $CURRENT_DIR/dnsmasq-ipv6.conf
 sed -ri 's/(^address=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
-./apply_whitelist.sh
+sed -ri 's/(^address=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
+./apply-whitelist.sh
 
 echo 'Removendo diretório temporário...'
 rm -rf $TEMP_DIR
