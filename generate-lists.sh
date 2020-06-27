@@ -1,12 +1,12 @@
-echo 'Criando um diretório de trabalho temporário'
+clear
+echo 'Criando um diretório de trabalho temporário...'
 TEMP_DIR=$(mktemp -p $(pwd) -d)
-
+CURRENT_DIR=$(pwd -P)
 # Preparando terreno para jogar as blacklists no diretorio do serviço
 dnsmasqd_path=/etc/dnsmasq.d/
 sudo mkdir -p $dnsmasqd_path
-sudo ln -sf dnsmasq.conf $dnsmasqd_path
+sudo ln -sf $CURRENT_DIR/dnsmasq.conf $dnsmasqd_path/blacklist.conf
 
-clear
 echo 'Baixando as listas de:'
 rm -f $TEMP_DIR/blacklist
 for f in $(cat url-sources.txt | grep -v '#'); do
@@ -17,10 +17,8 @@ done
 echo 'Removendo:'
 echo '    -> linhas comentadas...'
 sed -i 's/\#.*//g' $TEMP_DIR/blacklist
-echo '    -> linhas com 127.0.0.1 no início...'
-sed -i '/^127.0.0.1\ /d' $TEMP_DIR/blacklist
-echo '    -> linhas com 255.255.255.255...'
-sed -i '/^255.255.255.255\ /d' $TEMP_DIR/blacklist
+echo '    -> linhas com 127.0.0.1 ou 255.255.255.255 no início...'
+sed -i '/^[127.0.0.1|255.255.255.255]\ /d' $TEMP_DIR/blacklist
 echo '    -> linhas com endereço IPV6...'
 sed -i '/.*\:\:.*/d' $TEMP_DIR/blacklist
 
@@ -37,17 +35,18 @@ sed -i '/^$/d' $TEMP_DIR/blacklist
 echo 'Gerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
-echo 'Copiando lista base para as dos demais formatos...'
+echo 'Copiando lista base para os demais formatos...'
 cat domains.txt | tee hosts.txt | tee dnsmasq.conf | tee dnsmasq-ipv6.conf > /dev/null
 
 echo 'Gerando lista hosts.txt ...'
 sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo 'Gerando lista dnsmas.conf e dnsmasq-ipv6.conf ...'
-sed -i 's/^/address=\//g' {dnsmasq.conf,dnsmasq-ipv6.conf}
-sed -i 's/$/\/0.0.0.0/g' dnsmasq.conf
-sed -i 's/$/\/::1/g' dnsmasq-ipv6.conf
-sed -ri 's/(.*--.*)/\#\1/g' {dnsmasq.conf,dnsmasq-ipv6.conf}
+echo 'Gerando lista dnsmasq.conf e dnsmasq-ipv6.conf ...'
+sed -i 's/^/address=\//g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
+sed -i 's/$/\/0.0.0.0/g' $CURRENT_DIR/dnsmasq.conf
+sed -i 's/$/\/::1/g' $CURRENT_DIR/dnsmasq-ipv6.conf
+sed -ri 's/(^address=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
+./apply_whitelist.sh
 
 echo 'Removendo diretório temporário...'
 rm -rf $TEMP_DIR
