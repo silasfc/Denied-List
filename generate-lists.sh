@@ -45,7 +45,7 @@ sed -i 's/$/\/0.0.0.0/g' $CURRENT_DIR/dnsmasq.conf
 sed -i 's/$/\/::1/g' $CURRENT_DIR/dnsmasq-ipv6.conf
 sed -ri 's/(^address=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
 sed -ri 's/(^address=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
-./apply-whitelist.sh
+./apply-whitelist-dnsmasq.sh
 
 echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR

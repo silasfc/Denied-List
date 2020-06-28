@@ -1,7 +1,5 @@
 e.imguol.com
 img.yts.mx
-apis.google.com
-clients1.google.com
 static.chartbeat.com
 pbs.twimg.com
 gstatic.com
