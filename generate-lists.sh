@@ -1,31 +1,33 @@
+# Limpando a tela
 clear
-echo -e '\n\e[32mCriando um diretório de trabalho temporário...'
+
 CURRENT_DIR=$(pwd)
-TEMP_DIR=$(mktemp -p $CURRENT_DIR -d)
+TEMP_DIR=$(mktemp -d)
+echo -e "\n\e[32mCriando diretório de trabalho temporário ($TEMP_DIR)..."
 
 echo -e '\nBaixando as listas de:'
 rm -f $TEMP_DIR/blacklist
 for f in $(cat adblock-sources.txt | grep -v '#'); do
-    echo -e '\e[33m    - '$f
+    echo -e '\e[33m  - '$f
     wget $f -qO - >> $TEMP_DIR/blacklist
 done
 
 echo -e '\n\e[32mRemovendo:'
-echo -e '\e[33m    - Linhas comentadas...'
+echo -e '\e[33m  - Linhas comentadas...'
 sed -i 's/\#.*//g' $TEMP_DIR/blacklist
-echo '    - Linhas com 127.0.0.1 ou 255.255.255.255 no início...'
+echo -e '  - Linhas com 127.0.0.1 ou 255.255.255.255 no início...'
 sed -i '/^[127.0.0.1|255.255.255.255]\ /d' $TEMP_DIR/blacklist
-echo '    - Linhas com endereço IPV6...'
+echo -e '  - Linhas com endereço IPV6...'
 sed -i '/.*\:\:.*/d' $TEMP_DIR/blacklist
 
-echo '    - A coluna 0.0.0.0 de todas as linhas com 2 colunas...'
+echo -e '  - A coluna 0.0.0.0 de todas as linhas com 2 colunas...'
 sed -i 's/0.0.0.0\ //g' $TEMP_DIR/blacklist
-echo '    - Ocorrências de 0.0.0.0 na blacklist...'
+echo -e '  - Ocorrências de 0.0.0.0 na blacklist...'
 sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 
-echo '    - Todos os espaços e/ou tabulações...'
+echo -e '  - Todos os espaços e/ou tabulações...'
 sed -i 's/\s//g' $TEMP_DIR/blacklist
-echo '    - Linhas em branco...'
+echo -e '  - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
 echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
