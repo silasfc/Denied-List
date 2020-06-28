@@ -1,47 +1,43 @@
 clear
-echo 'Criando um diretório de trabalho temporário...'
-TEMP_DIR=$(mktemp -p $(pwd) -d)
-CURRENT_DIR=$(pwd -P)
-# Preparando terreno para jogar as blacklists no diretorio do serviço
-dnsmasqd_path=/etc/dnsmasq.d/
-sudo mkdir -p $dnsmasqd_path
-sudo ln -sf $CURRENT_DIR/dnsmasq.conf $dnsmasqd_path/blacklist.conf
+echo -e '\n\e[32mCriando um diretório de trabalho temporário...'
+CURRENT_DIR=$(pwd)
+TEMP_DIR=$(mktemp -p $CURRENT_DIR -d)
 
-echo 'Baixando as listas de:'
+echo -e '\nBaixando as listas de:'
 rm -f $TEMP_DIR/blacklist
-for f in $(cat url-sources.txt | grep -v '#'); do
-    echo '    -> '$f
+for f in $(cat adblock-sources.txt | grep -v '#'); do
+    echo -e '\e[33m    - '$f
     wget $f -qO - >> $TEMP_DIR/blacklist
 done
 
-echo 'Removendo:'
-echo '    -> linhas comentadas...'
+echo -e '\n\e[32mRemovendo:'
+echo -e '\e[33m    - Linhas comentadas...'
 sed -i 's/\#.*//g' $TEMP_DIR/blacklist
-echo '    -> linhas com 127.0.0.1 ou 255.255.255.255 no início...'
+echo '    - Linhas com 127.0.0.1 ou 255.255.255.255 no início...'
 sed -i '/^[127.0.0.1|255.255.255.255]\ /d' $TEMP_DIR/blacklist
-echo '    -> linhas com endereço IPV6...'
+echo '    - Linhas com endereço IPV6...'
 sed -i '/.*\:\:.*/d' $TEMP_DIR/blacklist
 
-echo '    -> a coluna 0.0.0.0 de todas as linhas com 2 colunas...'
+echo '    - A coluna 0.0.0.0 de todas as linhas com 2 colunas...'
 sed -i 's/0.0.0.0\ //g' $TEMP_DIR/blacklist
-echo '    -> 0.0.0.0 da blacklist...'
+echo '    - Ocorrências de 0.0.0.0 na blacklist...'
 sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 
-echo '    -> todos os espaços...'
+echo '    - Todos os espaços e/ou tabulações...'
 sed -i 's/\s//g' $TEMP_DIR/blacklist
-echo '    -> linhas brancas...'
+echo '    - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
-echo 'Gerando lista base (domínios) ordenada e sem duplicatas...'
+echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
-echo 'Copiando lista base para os demais formatos...'
+echo -e '\nCopiando lista base para os demais formatos...'
 cat domains.txt | tee hosts.txt | tee dnsmasq.conf | tee dnsmasq-ipv6.conf > /dev/null
 
-echo 'Gerando lista hosts.txt ...'
+echo -e '\nGerando lista hosts.txt...'
 sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo 'Gerando lista dnsmasq (ipv4 e ipv6) ...'
+echo -e '\nGerando listas dnsmasq (ipv4 e ipv6)...'
 sed -i 's/^/address=\//g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
 sed -i 's/$/\/0.0.0.0/g' $CURRENT_DIR/dnsmasq.conf
 sed -i 's/$/\/::1/g' $CURRENT_DIR/dnsmasq-ipv6.conf
@@ -49,7 +45,7 @@ sed -ri 's/(^address=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ip
 sed -ri 's/(^address=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
 ./apply-whitelist.sh
 
-echo 'Removendo diretório temporário...'
+echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR
 
-echo 'PRONTO!'
+echo -e '\nPRONTO!\e[0m'
