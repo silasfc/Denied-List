@@ -3,3 +3,4 @@ img.yts.mx
 static.chartbeat.com
 pbs.twimg.com
 gstatic.com
+www.gstatic.com

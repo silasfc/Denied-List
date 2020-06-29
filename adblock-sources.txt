@@ -1,10 +1,41 @@
+# Energized Unified
 https://block.energized.pro/unified/formats/domains.txt
+
+# Energized Regional Extension Pack
+https://block.energized.pro/extensions/regional/formats/domains.txt
+
+# Energized IP Extension Pack
+#https://block.energized.pro/extensions/ips/formats/list.txt
+
+# OISD Domains
 https://dbl.oisd.nl
+
+# StevenBlack Unified hosts + fakenews + gambling + porn
 https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
+
+# CoinBlockerLists - by ZeroDot1
 https://zerodot1.gitlab.io/CoinBlockerLists/hosts
+
+# GoodbyeAds-Ultra
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt
+
+# GoodbyeAds LeEco Adblock Extension
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Extension/GoodbyeAds-LeEco-Extension.txt
+
+# GoodbyeAds Samsung AdBlock Extension
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Extension/GoodbyeAds-Samsung-AdBlock.txt
+
+# GoodbyeAds Xiaomi Adblock Extension
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Extension/GoodbyeAds-Xiaomi-Extension.txt
+
+# GoodbyeAds YouTube Adblock Extension
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Extension/GoodbyeAds-YouTube-AdBlock.txt
+
+# Phishing Army
 https://phishing.army/download/phishing_army_blocklist_extended.txt
+
+# Malware domains
+https://mirror.cedia.org.ec/malwaredomains/justdomains
+
+# Peter Lowe’s Ad and tracking server list
+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext
