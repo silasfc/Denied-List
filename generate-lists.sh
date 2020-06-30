@@ -25,8 +25,8 @@ sed -i 's/0.0.0.0\ //g' $TEMP_DIR/blacklist
 echo -e '  - Ocorrências de 0.0.0.0 na blacklist...'
 sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 
-echo -e '  - Todos os espaços e/ou tabulações...'
-sed -i 's/\s//g' $TEMP_DIR/blacklist
+echo -e '  - Todos os espaços, tabulações e outros caracteres inválidos...'
+sed -i 's/[[:space:]/]//g' $TEMP_DIR/blacklist
 echo -e '  - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
@@ -34,17 +34,16 @@ echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
 echo -e '\nCopiando lista base para os demais formatos...'
-cat domains.txt | tee hosts.txt | tee dnsmasq.conf | tee dnsmasq-ipv6.conf > /dev/null
+cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
 
 echo -e '\nGerando lista hosts.txt...'
 sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo -e '\nGerando listas dnsmasq (ipv4 e ipv6)...'
-sed -i 's/^/address=\//g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
-sed -i 's/$/\/0.0.0.0/g' $CURRENT_DIR/dnsmasq.conf
-sed -i 's/$/\/::1/g' $CURRENT_DIR/dnsmasq-ipv6.conf
-sed -ri 's/(^address=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
-sed -ri 's/(^address=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/{dnsmasq.conf,dnsmasq-ipv6.conf}
+echo -e '\nGerando listas dnsmasq...'
+sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
+sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
+sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
+sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 ./apply-whitelist-dnsmasq.sh
 
 echo -e '\nRemovendo diretório temporário...'
