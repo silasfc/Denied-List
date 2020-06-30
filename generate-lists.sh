@@ -20,13 +20,13 @@ sed -i '/^[127.0.0.1|255.255.255.255]\ /d' $TEMP_DIR/blacklist
 echo -e '  - Linhas com endereço IPV6...'
 sed -i '/.*\:\:.*/d' $TEMP_DIR/blacklist
 
-echo -e '  - A coluna 0.0.0.0 de todas as linhas com 2 colunas...'
+echo -e '  - A coluna 0.0.0.0 de entradas de formato hosts...'
 sed -i 's/0.0.0.0\ //g' $TEMP_DIR/blacklist
-echo -e '  - Ocorrências de 0.0.0.0 na blacklist...'
-sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 
 echo -e '  - Todos os espaços, tabulações e outros caracteres inválidos...'
 sed -i 's/[[:space:]/]//g' $TEMP_DIR/blacklist
+echo -e '  - Ocorrências de 0.0.0.0 na blacklist...'
+sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 echo -e '  - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
