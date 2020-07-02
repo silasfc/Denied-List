@@ -36,10 +36,10 @@ sort $TEMP_DIR/blacklist | uniq > domains.txt
 echo -e '\nCopiando lista base para os demais formatos...'
 cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
 
-echo -e '\nGerando lista hosts.txt...'
+echo -e '\nAjustando lista hosts.txt...'
 sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo -e '\nGerando listas dnsmasq...'
+echo -e '\nAjustando lista dnsmasq...'
 sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
 sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
 sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf

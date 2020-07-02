@@ -39,3 +39,6 @@ https://mirror.cedia.org.ec/malwaredomains/justdomains
 
 # Peter Lowe’s Ad and tracking server list
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext
+
+# DuckDuckGo Tracker Radar
+https://blokada.org/blocklists/ddgtrackerradar/standard/hosts.txt
