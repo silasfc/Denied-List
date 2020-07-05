@@ -42,3 +42,12 @@ https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintex
 
 # DuckDuckGo Tracker Radar
 https://blokada.org/blocklists/ddgtrackerradar/standard/hosts.txt
+
+# anti-AD Domains
+https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-domains.txt
+
+# Andrew's Blocklist - Senpai (Strict - Domain List)
+https://gitlab.com/andryou/block/raw/master/senpai-strict-domains
+
+# NoTracking
+https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt

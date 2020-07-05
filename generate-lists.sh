@@ -1,5 +1,5 @@
 # Limpando a tela
-clear
+#clear
 
 CURRENT_DIR=$(pwd)
 TEMP_DIR=$(mktemp -d)
@@ -19,6 +19,9 @@ echo -e '  - Linhas com 127.0.0.1 ou 255.255.255.255 no início...'
 sed -i '/^[127.0.0.1|255.255.255.255]\ /d' $TEMP_DIR/blacklist
 echo -e '  - Linhas com endereço IPV6...'
 sed -i '/.*\:\:.*/d' $TEMP_DIR/blacklist
+echo -e "  - Ocorrências de 'address=/'' e '/*'"
+sed -i 's/.*address=\///g' $TEMP_DIR/blacklist
+sed -i 's/\/.*//g' $TEMP_DIR/blacklist
 
 echo -e '  - A coluna 0.0.0.0 de entradas de formato hosts...'
 sed -i 's/0.0.0.0\ //g' $TEMP_DIR/blacklist
@@ -48,5 +51,7 @@ sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 
 echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR
+
+echo -e "Entradas: $(cat domains.txt | wc -l)"
 
 echo -e '\nPRONTO!\e[0m'
