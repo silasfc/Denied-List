@@ -33,6 +33,10 @@ sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 echo -e '  - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
+echo -e 'Incluindo lista externa Shallalist...'
+./shallalist_compile.sh
+cat shallalist.txt >> $TEMP_DIR/blacklist
+
 echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
@@ -52,6 +56,6 @@ sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR
 
-echo -e "Entradas: $(cat domains.txt | wc -l)"
+echo -e "\nEntradas: $(cat domains.txt | wc -l)"
 
 echo -e '\nPRONTO!\e[0m'
