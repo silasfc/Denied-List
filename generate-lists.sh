@@ -33,10 +33,6 @@ sed -i '/^0.0.0.0$/d' $TEMP_DIR/blacklist
 echo -e '  - Linhas em branco...'
 sed -i '/^$/d' $TEMP_DIR/blacklist
 
-echo -e 'Incluindo lista externa Shallalist...'
-./shallalist_compile.sh
-cat shallalist.txt >> $TEMP_DIR/blacklist
-
 echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
