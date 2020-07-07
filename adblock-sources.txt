@@ -16,8 +16,8 @@ https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-g
 # CoinBlockerLists - by ZeroDot1
 https://zerodot1.gitlab.io/CoinBlockerLists/hosts
 
-# GoodbyeAds-Ultra
-https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt
+# GoodbyeAds
+https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt
 
 # GoodbyeAds LeEco Adblock Extension
 https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Extension/GoodbyeAds-LeEco-Extension.txt
