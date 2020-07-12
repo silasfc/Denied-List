@@ -5,13 +5,14 @@ https://block.energized.pro/unified/formats/domains.txt
 https://block.energized.pro/extensions/regional/formats/domains.txt
 
 # Energized IP Extension Pack
-https://block.energized.pro/extensions/ips/formats/list.txt
+#https://block.energized.pro/extensions/ips/formats/list.txt
 
 # OISD Domains
 https://dbl.oisd.nl
 
 # StevenBlack Unified hosts + fakenews + gambling + porn
-https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
+#https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts
+https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts
 
 # CoinBlockerLists - by ZeroDot1
 https://zerodot1.gitlab.io/CoinBlockerLists/hosts
