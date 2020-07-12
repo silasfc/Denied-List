@@ -5,7 +5,7 @@ https://block.energized.pro/unified/formats/domains.txt
 https://block.energized.pro/extensions/regional/formats/domains.txt
 
 # Energized IP Extension Pack
-#https://block.energized.pro/extensions/ips/formats/list.txt
+https://block.energized.pro/extensions/ips/formats/list.txt
 
 # OISD Domains
 https://dbl.oisd.nl
@@ -51,3 +51,6 @@ https://gitlab.com/andryou/block/raw/master/senpai-strict-domains
 
 # NoTracking
 https://raw.githubusercontent.com/notracking/hosts-blocklists/master/domains.txt
+
+# URLHaus Filter Domains
+https://gitlab.com/curben/urlhaus-filter/raw/master/urlhaus-filter-domains.txt
