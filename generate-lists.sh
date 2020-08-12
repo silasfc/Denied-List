@@ -47,7 +47,7 @@ sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
 sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
 sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
-#./apply-allowedlist-dnsmasq.sh
+# ./apply-allowedlist-dnsmasq.sh
 
 echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR

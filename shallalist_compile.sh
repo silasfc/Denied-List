@@ -14,14 +14,15 @@ for f in $files; do
 done
 
 echo -e '\e[32mMesclando shallalist na lista base'
-cat domains.txt >> shallalist.txt
+cat shallalist.txt > temp.txt
+cat domains.txt >> temp.txt
 echo -e '\nGerando lista base (domínios) ordenada e sem duplicatas...'
-sort shallalist.txt | uniq > domains.txt
+sort temp.txt | uniq > domains.txt
 
 
 echo -e '\n\e[32mRemovendo o pack shallalist.tar.gz'
 rm shallalist.tar.gz
-echo -e 'Removendo o diretório de extração temporário'
-rm -rf BL
+echo -e 'Removendo diretório e arquivo temporários'
+rm -rf BL temp.txt
 
 echo -e '\nPRONTO!\e[0m'
