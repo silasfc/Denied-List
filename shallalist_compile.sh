@@ -13,6 +13,12 @@ for f in $files; do
     cat $f >> shallalist.txt
 done
 
+echo -e '\e[32mMesclando shallalist na lista base'
+cat domains.txt >> shallalist.txt
+echo -e '\nGerando lista base (domínios) ordenada e sem duplicatas...'
+sort shallalist.txt | uniq > domains.txt
+
+
 echo -e '\n\e[32mRemovendo o pack shallalist.tar.gz'
 rm shallalist.tar.gz
 echo -e 'Removendo o diretório de extração temporário'
