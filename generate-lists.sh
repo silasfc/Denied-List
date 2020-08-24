@@ -36,17 +36,17 @@ sed -i '/^$/d' $TEMP_DIR/blacklist
 echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
-echo -e '\nCopiando lista base para os demais formatos...'
-cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
+# echo -e '\nCopiando lista base para os demais formatos...'
+# cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
 
-echo -e '\nAjustando lista hosts.txt...'
-sed -i 's/^/0.0.0.0\ /g' hosts.txt
+# echo -e '\nAjustando lista hosts.txt...'
+# sed -i 's/^/0.0.0.0\ /g' hosts.txt
 
-echo -e '\nAjustando lista dnsmasq...'
-sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
-sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
-sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
-sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
+# echo -e '\nAjustando lista dnsmasq...'
+# sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
+# sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
+# sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
+# sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 # ./apply-allowedlist-dnsmasq.sh
 
 echo -e '\nRemovendo diretório temporário...'
