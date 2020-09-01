@@ -4,6 +4,9 @@ https://block.energized.pro/unified/formats/domains.txt
 # Energized Xtreme Extension Pack
 https://block.energized.pro/extensions/xtreme/formats/domains.txt
 
+# Energized Social Extension Pack
+https://block.energized.pro/extensions/social/formats/domains.txt
+
 # Energized Regional Extension Pack
 https://block.energized.pro/extensions/regional/formats/domains.txt
 
