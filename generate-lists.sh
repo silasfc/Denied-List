@@ -1,5 +1,5 @@
-# Limpando a tela
-#clear
+# Cleaning the screen
+# clear
 
 CURRENT_DIR=$(pwd)
 TEMP_DIR=$(mktemp -d)
@@ -7,7 +7,7 @@ echo -e "\n\e[32mCriando diretório de trabalho temporário ($TEMP_DIR)..."
 
 echo -e '\nBaixando as listas de:'
 rm -f $TEMP_DIR/blacklist
-for f in $(cat adblock-sources.txt | grep -v '#'); do
+for f in $(cat blocklists.txt | grep -v '#'); do
     echo -e '\e[33m  - '$f
     wget $f -qO - >> $TEMP_DIR/blacklist
 done
@@ -36,22 +36,23 @@ sed -i '/^$/d' $TEMP_DIR/blacklist
 echo -e '\n\e[32mGerando lista base (domínios) ordenada e sem duplicatas...'
 sort $TEMP_DIR/blacklist | uniq > domains.txt
 
-# echo -e '\nCopiando lista base para os demais formatos...'
-# cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
+echo -e '\nRemovendo de domains.txt os domínios contidos em allowedlist.txt...'
+./apply-allowedlist-to-domains.sh
 
-# echo -e '\nAjustando lista hosts.txt...'
-# sed -i 's/^/0.0.0.0\ /g' hosts.txt
+echo -e '\nCopiando lista base para os demais formatos...'
+cat domains.txt | tee hosts.txt | tee dnsmasq.conf > /dev/null
 
-# echo -e '\nAjustando lista dnsmasq...'
-# sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
-# sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
-# sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
-# sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
-# ./apply-allowedlist-dnsmasq.sh
+echo -e '\nAjustando lista hosts.txt...'
+sed -i 's/^/0.0.0.0\ /g' hosts.txt
+
+echo -e '\nAjustando lista dnsmasq...'
+sed -i 's/^/server=\//g' $CURRENT_DIR/dnsmasq.conf
+sed -i 's/$/\//g' $CURRENT_DIR/dnsmasq.conf
+sed -ri 's/(^server=\/.*-[-|.].*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
+sed -ri 's/(^server=\/.*\.-.*)/\#\1/g' $CURRENT_DIR/dnsmasq.conf
 
 echo -e '\nRemovendo diretório temporário...'
 rm -rf $TEMP_DIR
 
 echo -e "\nEntradas: $(cat domains.txt | wc -l)"
-
 echo -e '\nPRONTO!\e[0m'
